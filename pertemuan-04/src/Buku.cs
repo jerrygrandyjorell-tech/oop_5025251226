@@ -7,14 +7,15 @@ namespace Pertemuan04;
 
 public class Buku
 {
+    // DONE //
     // TODO(Level 1): field PUBLIK di bawah ini melanggar enkapsulasi (siapa pun
     //   bisa mengubahnya sembarangan). Jadikan field PRIVATE (awali nama dengan
     //   _) lalu ekspos lewat properti read-only: public get, tanpa setter
     //   publik. Nama properti tetap Isbn, Judul, StokTotal, StokTersedia.
-    public string Isbn = "";
-    public string Judul = "";
-    public int StokTotal;
-    public int StokTersedia;
+    private string _isbn = "";
+    private string _judul = "";
+    private int _stokTotal;
+    private int _stokTersedia;
 
     // TODO(Level 8): properti di bawah ini menerima nilai apa saja. Beri nilai
     //   awal 7 dan tambahkan logika validasi di accessor set (perlu field
