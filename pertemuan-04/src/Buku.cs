@@ -12,10 +12,18 @@ public class Buku
     //   bisa mengubahnya sembarangan). Jadikan field PRIVATE (awali nama dengan
     //   _) lalu ekspos lewat properti read-only: public get, tanpa setter
     //   publik. Nama properti tetap Isbn, Judul, StokTotal, StokTersedia.
+
+       // Level 1 : Field private //
     private string _isbn = "";
     private string _judul = "";
     private int _stokTotal;
     private int _stokTersedia;
+
+    // Level 1 : Propeti read-only //    
+    public string Isbn => _isbn;
+    public string Judul => _judul;
+    public int StokTotal => _stokTotal;
+    public int StokTersedia => _stokTersedia;
 
     // TODO(Level 8): properti di bawah ini menerima nilai apa saja. Beri nilai
     //   awal 7 dan tambahkan logika validasi di accessor set (perlu field
