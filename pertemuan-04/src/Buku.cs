@@ -29,7 +29,20 @@ public class Buku
     //   awal 7 dan tambahkan logika validasi di accessor set (perlu field
     //   pendukung): nilai harus 1..30, di luar itu lempar
     //   ArgumentOutOfRangeException dan JANGAN mengubah nilai lama.
-    public int BatasHariPinjam { get; set; }
+
+    private int _batasHariPinjam = 7;
+    public int BatasHariPinjam{
+
+        get => _batasHariPinjam;
+        set
+        {
+            if (value < 1 || value > 30)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value)), "Batas hari pinjam harus antara 1 dan 30.");
+            }
+            _batasHariPinjam = value
+        }
+    }
 
     // TODO(Level 2): validasi di AWAL konstruktor -- judul null/kosong/spasi
     //   saja atau stokTotal negatif -> lempar ArgumentException
@@ -39,6 +52,8 @@ public class Buku
     //   hasilnya harus tepat 13 digit angka dengan digit cek ISBN-13 yang benar;
     //   kalau tidak, lempar ArgumentException. Isbn menyimpan versi TANPA '-'.
     public Buku(string isbn, string judul, int stokTotal)
+        // Level 2: Validasi di awal
+         if (string.JikaNullAtauKosongSpasi())
     {
         // TODO(Level 1): isi Isbn, Judul, StokTotal dari parameter; StokTersedia
         //   awal = stokTotal.
