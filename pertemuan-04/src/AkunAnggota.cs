@@ -3,6 +3,8 @@
 // disediakan. Jangan mengubah nama/tipe yang sudah ada kecuali TODO
 // memintanya secara eksplisit.
 
+using System;
+
 namespace Pertemuan04;
 
 public class AkunAnggota
@@ -11,50 +13,65 @@ public class AkunAnggota
 
     public string NomorAnggota { get; }
 
-    // TODO(Level 9): Nama hanya boleh diisi saat objek dibuat (ganti set ->
-    //   init). Denda TIDAK boleh diubah dari luar kelas sama sekali (setter
-    //   private) -- perubahannya hanya lewat TambahDenda()/BayarDenda().
-    public string Nama { get; set; } = "";
-    public int Denda { get; set; }
+    // Level 9: Nama menggunakan init, Denda dengan setter private
+    public string Nama { get; init; } = "";
+    public int Denda { get; private set; }
 
-    // TODO(Level 10): JumlahPinjamanAktif hanya boleh diubah dari dalam kelas
-    //   (setter private), dan pencatatannya lewat method internal (bukan public)
-    //   di bawah -- hanya kode di dalam pustaka (Perpustakaan) yang boleh
-    //   memanggilnya, bukan kode pemakai dari luar.
-    public int JumlahPinjamanAktif { get; set; }
+    // Level 10: JumlahPinjamanAktif dengan setter private
+    public int JumlahPinjamanAktif { get; private set; }
 
     public AkunAnggota(string nomorAnggota)
     {
-        // TODO(Level 9): nomorAnggota null/kosong/spasi -> ArgumentException;
-        //   selain itu isi NomorAnggota.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        // Level 9: nomorAnggota null/kosong/spasi -> ArgumentException; selain itu isi NomorAnggota.
+        if (string.IsNullOrWhiteSpace(nomorAnggota))
+        {
+            throw new ArgumentException("Nomor anggota tidak boleh null, kosong, atau hanya berisi spasi.", nameof(nomorAnggota));
+        }
+        NomorAnggota = nomorAnggota;
     }
 
     public void TambahDenda(int rupiah)
     {
-        // TODO(Level 9): rupiah <= 0 -> ArgumentOutOfRangeException; selain itu
-        //   tambahkan ke Denda.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        // Level 9: rupiah <= 0 -> ArgumentOutOfRangeException; selain itu tambahkan ke Denda.
+        if (rupiah <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(rupiah), "Jumlah denda yang ditambah harus lebih dari 0.");
+        }
+        Denda += rupiah;
     }
 
     public int BayarDenda(int rupiah)
     {
-        // TODO(Level 9): rupiah <= 0 -> ArgumentOutOfRangeException; rupiah >
-        //   Denda -> InvalidOperationException (denda tidak berubah); selain itu
-        //   kurangi Denda dan KEMBALIKAN sisa denda.
-        throw new NotImplementedException("Level 9 belum diimplementasikan");
+        // Level 9: rupiah <= 0 -> ArgumentOutOfRangeException
+        if (rupiah <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(rupiah), "Jumlah pembayaran denda harus lebih dari 0.");
+        }
+
+        // Level 9: rupiah > Denda -> InvalidOperationException (denda tidak berubah)
+        if (rupiah > Denda)
+        {
+            throw new InvalidOperationException("Jumlah pembayaran melebihi total denda saat ini.");
+        }
+
+        // Kurangi Denda dan kembalikan sisa denda
+        Denda -= rupiah;
+        return Denda;
     }
 
-    public void CatatPinjam()
+    // Level 10: Ubah modifier menjadi internal agar hanya bisa dipanggil dalam assembly yang sama (Perpustakaan)
+    internal void CatatPinjam()
     {
-        // TODO(Level 10): naikkan JumlahPinjamanAktif satu.
-        throw new NotImplementedException("Level 10 belum diimplementasikan");
+        // Level 10: naikkan JumlahPinjamanAktif satu.
+        JumlahPinjamanAktif++;
     }
 
-    public void CatatKembali()
+    internal void CatatKembali()
     {
-        // TODO(Level 10): turunkan JumlahPinjamanAktif satu (tidak boleh di
-        //   bawah 0).
-        throw new NotImplementedException("Level 10 belum diimplementasikan");
+        // Level 10: turunkan JumlahPinjamanAktif satu (tidak boleh di bawah 0).
+        if (JumlahPinjamanAktif > 0)
+        {
+            JumlahPinjamanAktif--;
+        }
     }
 }
